@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+<script>
+  window.TrackJS && TrackJS.install({ 
+    token: "4c91e2e5e1174777a6eb2def0ac5ff60"
+    // for more configuration options, see https://docs.trackjs.com
+  });
+</script>
 
 <head>
   <meta charset="UTF-8">
@@ -69,21 +76,21 @@
     </form>
 
     <section id="error-btns">
-      <button>Console Log</button>
-      <button>Console Error</button>
-      <button>Console Count</button>
-      <button>Console Warn</button>
-      <button>Console Assert</button>
-      <button>Console Clear</button>
-      <button>Console Dir</button>
-      <button>Console dirxml</button>
-      <button>Console Group Start</button>
-      <button>Console Group End</button>
-      <button>Console Table</button>
-      <button>Start Timer</button>
-      <button>End Timer</button>
-      <button>Console Trace</button>
-      <button>Trigger a Global Error</button>
+      <button onclick = 'console.log("Life is one big test")'>Console Log</button>
+      <button onclick = 'console.error("Big mistake here bucko")'>Console Error</button>
+      <button onclick = 'console.count("count")'>Console Count</button>
+      <button onclick = 'console.warn("Proceed with caution")'>Console Warn</button>
+      <button onclick = 'const num = 7; console.assert(num % 4 === 0, {number: num, errorMsg: "This number is not a multiple of 4"})';>Console Assert</button>
+      <button onclick = 'console.clear("Nothing to see here")'>Console Clear</button>
+      <button onclick = 'console.dir(document.location)'>Console Dir</button>
+      <button onclick = 'console.dirxml(document.scripts)'>Console dirxml</button>
+      <button onclick = 'console.group()'>Console Group Start</button>
+      <button onclick = 'console.groupEnd()'>Console Group End</button>
+      <button onclick = 'console.table([{fruit: "apple", color: "red" }, {fruit: "pinapple", color: "yellow"}]);'>Console Table</button>
+      <button onclick = 'console.time()'>Start Timer</button>
+      <button onclick = 'console.timeEnd()'>End Timer</button>
+      <button onclick = 'tracing()'>Console Trace</button>
+      <button onclick = 'justWrong'>Trigger a Global Error</button>
     </section>
   </main>
 
@@ -102,6 +109,39 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+
+    function tracing(){
+      const first = () => {second();}; 
+      const second = () => {third();}; 
+      const third = () => {console.trace()}; 
+      first();
+    }
+
+    try {
+      throw new Error("You win some you lose some");
+    }
+    catch (error) { 
+      console.log("Nice Catch?");
+
+    }
+    finally {
+      console.log("FINISH HIM"); 
+    }
+
+    class britneyIsAnError extends Error { 
+      constructor(message){
+        super(message); 
+        this.name = this.constructor.name; 
+      }
+    }
+
+    let mistake = new britneyIsAnError("Custom error"); 
+    try { 
+      throw mistake;
+    }
+    catch(mistake){
+      console.log("britneyIsAnError (Custom error) has been caught!"); 
+    }
   </script>
 </body>
 
